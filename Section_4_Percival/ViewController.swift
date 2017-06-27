@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
    @IBOutlet weak var labelSeconds: SecondLabel!
    
@@ -16,6 +16,8 @@ class ViewController: UIViewController {
    
    var timer : Timer? = nil;
    var seconds = 0
+   
+   let nameSValues : [String:Int] = ["Egg": 210, "Potato": 320, "Manioc": 360, "Carrot": 260, "Onion": 110]
    
    override func viewDidLoad() {
       super.viewDidLoad()
@@ -89,5 +91,25 @@ class ViewController: UIViewController {
       }
       updateSecondsLabel()
    }
+   
+   
+   //Table Stufs
+   
+   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+       return nameSValues.count
+   }
+   
+   
+   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+      let cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "celltime")
+          cell.textLabel?.text = " \([String](nameSValues.keys)[indexPath.row]) - \(String(([Int](nameSValues.values))[indexPath.row])) "
+      return cell
+   }
+   
+   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+      seconds = ([Int](nameSValues.values))[indexPath.row]
+      updateSecondsLabel()
+   }
+   
 }
 
